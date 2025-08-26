@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OVM Withdrawer Console</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <div class="logo">
+            <div class="logo-circle"></div>
+            <span class="logo-text">OVM Withdrawer</span>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <div class="network-indicator">
+            <div class="status-dot"></div>
+            <span>Console</span>
+          </div>
+          <button class="theme-toggle" id="themeToggle">
+            <span class="theme-icon" id="themeIcon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Execute OVM1
+            <span class="gradient-text">Withdrawals</span>
+          </h1>
+          <p class="hero-description">
+            Safely prove and execute withdrawals from Optimism Legacy (OVM1) to
+            Ethereum mainnet with our intuitive interface.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number" id="totalWithdrawals">--</span>
+              <span class="stat-label">Total Withdrawals</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Messages -->
+      <div id="statusMessages" class="status-container"></div>
+
+      <!-- Workflow Steps -->
+      <div class="workflow">
+        <!-- Step 1: Search -->
+        <div class="step-card active" id="step1">
+          <div class="step-header">
+            <div class="step-number">1</div>
+            <div class="step-info">
+              <h3 class="step-title">Find Your Withdrawal</h3>
+              <p class="step-description">
+                Search by transaction hash or wallet address
+              </p>
+            </div>
+          </div>
+
+          <div class="step-content">
+            <div class="search-container">
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="transactionHash"
+                  placeholder="Enter transaction hash or wallet address..."
+                  class="search-input"
+                />
+                <button id="searchBtn" class="search-btn">
+                  <span class="search-icon">🔍</span>
+                  Search
+                </button>
+              </div>
+              <div class="search-tips">
+                <span class="tip"
+                  >💡 Tip: You can search by hash (0x...) or any wallet
+                  address</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Select Withdrawal -->
+        <div class="step-card" id="step2">
+          <div class="step-header">
+            <div class="step-number">2</div>
+            <div class="step-info">
+              <h3 class="step-title">Select Withdrawal</h3>
+              <p class="step-description">
+                Choose from search results or recent withdrawals
+              </p>
+            </div>
+          </div>
+
+          <div class="step-content">
+            <!-- Search Results -->
+            <div
+              id="searchResults"
+              class="results-container"
+              style="display: none"
+            >
+              <h4 class="results-title">Search Results</h4>
+              <div id="searchResultsList" class="results-list"></div>
+            </div>
+
+            <!-- Recent Withdrawals -->
+            <div id="recentWithdrawals" class="results-container">
+              <h4 class="results-title">Recent Withdrawals</h4>
+              <div id="withdrawalsList" class="results-list">
+                <div class="loading-state">
+                  <div class="loading-spinner"></div>
+                  <span>Loading withdrawals...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Wallet Connection -->
+        <div class="step-card" id="step3">
+          <div class="step-header">
+            <div class="step-number">3</div>
+            <div class="step-info">
+              <h3 class="step-title">Connect Wallet</h3>
+              <p class="step-description">
+                Choose your preferred authentication method
+              </p>
+            </div>
+          </div>
+
+          <div class="step-content">
+            <div class="auth-options">
+              <!-- Private Key Option -->
+              <div class="auth-card recommended" id="privateKeyAuthCard">
+                <div class="auth-header">
+                  <div class="auth-icon">🔐</div>
+                  <div class="auth-info">
+                    <h4>Private Key</h4>
+                    <p>Direct authentication method</p>
+                  </div>
+                  <div class="recommended-badge">Recommended</div>
+                </div>
+                <button id="togglePrivateKey" class="auth-btn primary">
+                  Use Private Key
+                </button>
+                <div id="privateKeyInput" class="private-key-input hidden">
+                  <input
+                    type="password"
+                    id="privateKey"
+                    placeholder="Enter your private key..."
+                    class="key-input"
+                  />
+                  <button id="hidePrivateKey" class="hide-key-btn">
+                    Hide Private Key
+                  </button>
+                </div>
+              </div>
+
+              <!-- Wallet Connection Option -->
+              <div class="auth-card coming-soon" id="walletAuthCard">
+                <div class="auth-header">
+                  <div class="auth-icon">🦊</div>
+                  <div class="auth-info">
+                    <h4>Connect Wallet</h4>
+                    <p>MetaMask integration</p>
+                  </div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                </div>
+                <button
+                  id="connectWalletBtn"
+                  class="auth-btn secondary"
+                  disabled
+                >
+                  <span id="walletBtnText">Connect MetaMask</span>
+                </button>
+                <div id="walletStatus" class="wallet-status hidden">
+                  <div class="wallet-info">
+                    <span class="wallet-label">Connected:</span>
+                    <span id="walletAddress" class="wallet-address"></span>
+                  </div>
+                  <button id="disconnectWalletBtn" class="disconnect-btn">
+                    Disconnect
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Configure RPC -->
+        <div class="step-card" id="step4">
+          <div class="step-header">
+            <div class="step-number">4</div>
+            <div class="step-info">
+              <h3 class="step-title">Configure RPC</h3>
+              <p class="step-description">
+                Set your Ethereum and Optimism RPC endpoints
+              </p>
+            </div>
+          </div>
+
+          <div class="step-content">
+            <div class="rpc-config">
+              <div class="rpc-group">
+                <label for="l1RpcUrl" class="rpc-label">
+                  <span class="network-icon">🔷</span>
+                  Ethereum Mainnet RPC
+                </label>
+                <input
+                  type="url"
+                  id="l1RpcUrl"
+                  value="https://eth-mainnet.g.alchemy.com/v2/your-api-key"
+                  class="rpc-input"
+                  required
+                />
+              </div>
+
+              <div class="rpc-group">
+                <label for="l2RpcUrl" class="rpc-label">
+                  <span class="network-icon">🔴</span>
+                  Optimism Mainnet RPC
+                </label>
+                <input
+                  type="url"
+                  id="l2RpcUrl"
+                  value="https://opt-mainnet.g.alchemy.com/v2/your-api-key"
+                  class="rpc-input"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Execute -->
+        <div class="step-card" id="step5">
+          <div class="step-header">
+            <div class="step-number">5</div>
+            <div class="step-info">
+              <h3 class="step-title">Execute Withdrawal</h3>
+              <p class="step-description">
+                Review details and execute your withdrawal
+              </p>
+            </div>
+          </div>
+
+          <div class="step-content">
+            <!-- Withdrawal Details -->
+            <div
+              id="withdrawalDetails"
+              class="withdrawal-summary"
+              style="display: none"
+            >
+              <h4 class="summary-title">Withdrawal Summary</h4>
+              <div class="summary-grid">
+                <div class="summary-item">
+                  <span class="item-label">From</span>
+                  <span id="detailFrom" class="item-value">--</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">To</span>
+                  <span id="detailTo" class="item-value">--</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Amount</span>
+                  <span id="detailAmount" class="item-value">--</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Token</span>
+                  <span id="detailTokenType" class="item-value">--</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Nonce</span>
+                  <span id="detailNonce" class="item-value">--</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Timestamp</span>
+                  <span id="detailTimestamp" class="item-value">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Execute Button -->
+            <form id="withdrawalForm">
+              <button
+                type="submit"
+                id="executeBtn"
+                class="execute-btn"
+                disabled
+              >
+                <span class="btn-content">
+                  <span class="btn-icon">⚡</span>
+                  <span class="btn-text">Execute Withdrawal</span>
+                </span>
+                <div class="btn-loading hidden">
+                  <div class="loading-spinner"></div>
+                  <span>Executing...</span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <div class="notice-content">
+          <div class="notice-icon">🛡️</div>
+          <div class="notice-text">
+            <h4>Security First</h4>
+            <p>
+              This application runs locally only. Never share private keys or
+              use deployed versions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
