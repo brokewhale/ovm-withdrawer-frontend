@@ -329,6 +329,101 @@ body {
   border: 1px solid rgba(0, 112, 243, 0.2);
 }
 
+.status-warning {
+  background: rgba(255, 217, 61, 0.1);
+  color: var(--warning-yellow);
+  border: 1px solid rgba(255, 217, 61, 0.2);
+}
+
+/* Execution Result Messages */
+.execution-result {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.execution-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.execution-result.status-success .execution-result-header {
+  background: var(--gradient-success);
+  color: var(--text-inverse);
+}
+
+.execution-result.status-error .execution-result-header {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: var(--text-inverse);
+}
+
+.status-title {
+  font-size: 1.1rem;
+  margin-left: var(--space-sm);
+}
+
+.status-close {
+  background: none;
+  border: none;
+  color: var(--text-inverse);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.status-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.status-content {
+  padding: var(--space-lg);
+  line-height: 1.6;
+}
+
+.status-content strong {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  display: inline-block;
+}
+
+.status-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  display: block;
+  margin: var(--space-sm) 0;
+  padding: var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.status-content a {
+  color: var(--success-green);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.status-content a:hover {
+  color: var(--op-red);
+  text-decoration: underline;
+}
+
 /* Workflow Steps */
 .workflow {
   display: flex;
