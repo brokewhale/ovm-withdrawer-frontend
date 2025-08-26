@@ -4,19 +4,6 @@
 
 A modern, TypeScript-powered web interface for proving and executing withdrawals from Optimism Legacy (OVM 1.0) to Ethereum mainnet. Originally a CLI tool, now enhanced with a beautiful step-by-step web interface.
 
-## ✨ Features
-
-- 🎨 **Optimism-styled UI** - Clean, modern interface matching the official Optimism console
-- 🌙 **Light/Dark Mode** - Toggle between light and dark themes (light mode default)
-- 🔍 **Smart Search** - Look up withdrawals by transaction hash or wallet address
-- 📊 **Withdrawal Details** - View comprehensive withdrawal information
-- 🚀 **One-click Execution** - Execute withdrawals directly from the web interface
-- 🔒 **Authentication Options** - Private key authentication (wallet connection coming soon)
-- 📱 **Responsive Design** - Works on desktop and mobile devices
-- 📋 **Recent Withdrawals** - Browse and select from available withdrawals
-- ⚡ **TypeScript** - Full type safety and modern development experience
-- 🔥 **Bright Red Execute Button** - Visual feedback when ready to execute (#ff0420)
-
 ## 🛠️ Tech Stack
 
 - **Backend**: Node.js, Express.js, TypeScript
